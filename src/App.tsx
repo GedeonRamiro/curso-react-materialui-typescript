@@ -8,11 +8,11 @@ export const App = () => {
   return (
     <AppThemeProvider>
       <DrawerProvider>
-        <MenuLateral>
-          <BrowserRouter>
+        <BrowserRouter>
+          <MenuLateral>
             <AppRoutes />
-          </BrowserRouter>
-        </MenuLateral>
+          </MenuLateral>
+        </BrowserRouter>
       </DrawerProvider>
     </AppThemeProvider>
   );

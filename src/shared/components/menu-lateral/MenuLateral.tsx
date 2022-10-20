@@ -1,4 +1,3 @@
-import { Home } from "@mui/icons-material";
 import {
   Avatar,
   Divider,
@@ -11,7 +10,35 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import { Box } from "@mui/system";
+import { useMatch, useNavigate, useResolvedPath } from "react-router-dom";
+
 import { useDrawerContext } from "../../contexts";
+
+interface IListItemLinkProps {
+  to: string;
+  icon: React.ReactNode;
+  label: string;
+  onClick: (() => void) | undefined;
+}
+
+const ListItemLink = ({ to, label, icon, onClick }: IListItemLinkProps) => {
+  const navigate = useNavigate();
+
+  const resolvePath = useResolvedPath(to);
+  const match = useMatch({ path: resolvePath.pathname, end: false });
+
+  const handleClick = () => {
+    navigate(to);
+    onClick?.();
+  };
+
+  return (
+    <ListItemButton selected={!!match} onClick={handleClick}>
+      <ListItemIcon>{icon}</ListItemIcon>
+      <ListItemText primary={label} />
+    </ListItemButton>
+  );
+};
 
 interface IPros {
   children: React.ReactNode;
@@ -21,7 +48,7 @@ export const MenuLateral = ({ children }: IPros) => {
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const { isDrawerOpen, toggleDrawerOpen } = useDrawerContext();
+  const { isDrawerOpen, drawerOptions, toggleDrawerOpen } = useDrawerContext();
 
   return (
     <>
@@ -51,12 +78,15 @@ export const MenuLateral = ({ children }: IPros) => {
           <Divider />
           <Box flex={1}>
             <List component="nav">
-              <ListItemButton>
-                <ListItemIcon>
-                  <Home />
-                </ListItemIcon>
-                <ListItemText primary="Página inicial" />
-              </ListItemButton>
+              {drawerOptions.map((drawerOption) => (
+                <ListItemLink
+                  to={drawerOption.path}
+                  key={drawerOption.path}
+                  icon={drawerOption.icon}
+                  label={drawerOption.label}
+                  onClick={smDown ? toggleDrawerOpen : undefined}
+                />
+              ))}
             </List>
           </Box>
         </Box>
