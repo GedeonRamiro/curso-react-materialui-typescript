@@ -3,6 +3,7 @@ import { Home } from "@mui/icons-material";
 import { useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useAppThemeContext, useDrawerContext } from "../shared/contexts";
+import { Dashboard } from "../pages";
 
 export const AppRoutes = () => {
   const { toggleTheme } = useAppThemeContext();
@@ -16,24 +17,7 @@ export const AppRoutes = () => {
 
   return (
     <Routes>
-      <Route
-        path="/pagina-inicial"
-        element={
-          <>
-            <Button variant="contained" color="primary" onClick={toggleTheme}>
-              Toggle Theme
-            </Button>
-
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={toggleDrawerOpen}
-            >
-              Menu
-            </Button>
-          </>
-        }
-      />
+      <Route path="/pagina-inicial" element={<Dashboard />} />
       <Route path="*" element={<Navigate to="/pagina-inicial" />} />
     </Routes>
   );
