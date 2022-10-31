@@ -40,7 +40,7 @@ export const BarraDeFerramentas = ({
         />
       )}
 
-      <Box flex={1} display="flex" justifyContent="end">
+      <Box flex={1} display="flex" justifyContent="flex-end">
         {mostrarBotaoNovo && (
           <Button
             color="primary"
