@@ -4,7 +4,37 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import AddIcon from "@mui/icons-material/Add";
 
-export const FerramentasDeDetalhe = () => {
+interface IFerramentasDeDetalheProps {
+  textoBotaoNovo?: string;
+
+  mostrarBotaoNovo?: boolean;
+  mostrarBotaoVoltar?: boolean;
+  mostrarBotaoApagar?: boolean;
+  mostrarBotaoSalvar?: boolean;
+  mostrarBotaoSalvarEFechar?: boolean;
+
+  aoClicarEmNovo?: () => void;
+  aoClicarEmVoltar?: () => void;
+  aoClicarEmApagar?: () => void;
+  aoClicarEmSalvar?: () => void;
+  aoClicarEmSalvarEFechar?: () => void;
+}
+
+export const FerramentasDeDetalhe = ({
+  textoBotaoNovo = "Novo",
+
+  mostrarBotaoNovo = true,
+  mostrarBotaoVoltar = true,
+  mostrarBotaoApagar = true,
+  mostrarBotaoSalvar = true,
+  mostrarBotaoSalvarEFechar = false,
+
+  aoClicarEmNovo,
+  aoClicarEmVoltar,
+  aoClicarEmApagar,
+  aoClicarEmSalvar,
+  aoClicarEmSalvarEFechar,
+}: IFerramentasDeDetalheProps) => {
   const theme = useTheme();
 
   return (
@@ -18,49 +48,65 @@ export const FerramentasDeDetalhe = () => {
       height={theme.spacing(5)}
       component={Paper}
     >
-      <Button
-        color="primary"
-        disableElevation
-        variant="contained"
-        startIcon={<SaveIcon />}
-      >
-        Salvar
-      </Button>
-      <Button
-        color="primary"
-        disableElevation
-        variant="outlined"
-        startIcon={<SaveIcon />}
-      >
-        Salvar e voltar
-      </Button>
-      <Button
-        color="primary"
-        disableElevation
-        variant="outlined"
-        startIcon={<DeleteIcon />}
-      >
-        Apagar
-      </Button>
-      <Button
-        color="primary"
-        disableElevation
-        variant="outlined"
-        startIcon={<AddIcon />}
-      >
-        Novo
-      </Button>
+      {mostrarBotaoSalvar && (
+        <Button
+          color="primary"
+          disableElevation
+          variant="contained"
+          onClick={aoClicarEmSalvar}
+          startIcon={<SaveIcon />}
+        >
+          Salvar
+        </Button>
+      )}
+      {mostrarBotaoSalvarEFechar && (
+        <Button
+          color="primary"
+          disableElevation
+          variant="outlined"
+          onClick={aoClicarEmSalvarEFechar}
+          startIcon={<SaveIcon />}
+        >
+          Salvar e voltar
+        </Button>
+      )}
+      {mostrarBotaoApagar && (
+        <Button
+          color="primary"
+          disableElevation
+          variant="outlined"
+          onClick={aoClicarEmApagar}
+          startIcon={<DeleteIcon />}
+        >
+          Apagar
+        </Button>
+      )}
+      {mostrarBotaoNovo && (
+        <Button
+          color="primary"
+          disableElevation
+          variant="outlined"
+          onClick={aoClicarEmNovo}
+          startIcon={<AddIcon />}
+        >
+          {textoBotaoNovo}
+        </Button>
+      )}
 
-      <Divider variant="middle" orientation="vertical" />
-
-      <Button
-        color="primary"
-        disableElevation
-        variant="outlined"
-        startIcon={<ArrowBackIcon />}
-      >
-        Voltar
-      </Button>
+      {mostrarBotaoVoltar && (
+        <>
+          <Divider variant="middle" orientation="vertical" />
+          <Button
+            color="primary"
+            disableElevation
+            variant="outlined"
+            onClick={aoClicarEmVoltar}
+            startIcon={<ArrowBackIcon />}
+          >
+            Voltar
+          </Button>
+        </>
+      )}
     </Box>
   );
 };

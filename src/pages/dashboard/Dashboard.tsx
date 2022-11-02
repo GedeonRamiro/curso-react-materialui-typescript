@@ -11,7 +11,7 @@ export const Dashboard = () => {
       titulo="Página inicial"
       barraDeFerramentas={
         //<FerramentasDaListagem mostrarInputBusca textoBotaoNovo="Nova" />
-        <FerramentasDeDetalhe />
+        <FerramentasDeDetalhe mostrarBotaoSalvarEFechar />
       }
     >
       <Box>testeando</Box>
