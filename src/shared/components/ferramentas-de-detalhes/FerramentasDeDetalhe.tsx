@@ -38,11 +38,7 @@ export const FerramentasDeDetalhe = () => {
         color="primary"
         disableElevation
         variant="outlined"
-        startIcon={
-          <Icon>
-            <DeleteIcon />
-          </Icon>
-        }
+        startIcon={<DeleteIcon />}
       >
         Apagar
       </Button>
