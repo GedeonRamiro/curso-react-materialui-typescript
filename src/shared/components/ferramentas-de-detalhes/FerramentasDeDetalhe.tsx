@@ -4,8 +4,10 @@ import {
   Skeleton,
   Paper,
   useTheme,
-  Icon,
   Divider,
+  useMediaQuery,
+  Theme,
+  Typography,
 } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -55,6 +57,8 @@ export const FerramentasDeDetalhe = ({
   aoClicarEmSalvar,
   aoClicarEmSalvarEFechar,
 }: IFerramentasDeDetalheProps) => {
+  const smDown = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
+  const mdDown = useMediaQuery((theme: Theme) => theme.breakpoints.down("md"));
   const theme = useTheme();
 
   return (
@@ -76,22 +80,39 @@ export const FerramentasDeDetalhe = ({
           onClick={aoClicarEmSalvar}
           startIcon={<SaveIcon />}
         >
-          Salvar
+          <Typography
+            variant="button"
+            whiteSpace="nowrap"
+            textOverflow="ellipsis"
+            overflow="hidden"
+          >
+            Salvar
+          </Typography>
         </Button>
       )}
       {mostrarBotaoSalvarCarregando && <Skeleton width={100} height={62} />}
-      {mostrarBotaoSalvarEFechar && !mostrarBotaoSalvarEFecharCarregando && (
-        <Button
-          color="primary"
-          disableElevation
-          variant="outlined"
-          onClick={aoClicarEmSalvarEFechar}
-          startIcon={<SaveIcon />}
-        >
-          Salvar e voltar
-        </Button>
-      )}
-      {mostrarBotaoSalvarEFecharCarregando && (
+      {mostrarBotaoSalvarEFechar &&
+        !mostrarBotaoSalvarEFecharCarregando &&
+        !smDown &&
+        !mdDown && (
+          <Button
+            color="primary"
+            disableElevation
+            variant="outlined"
+            onClick={aoClicarEmSalvarEFechar}
+            startIcon={<SaveIcon />}
+          >
+            <Typography
+              variant="button"
+              whiteSpace="nowrap"
+              textOverflow="ellipsis"
+              overflow="hidden"
+            >
+              Salvar e voltar
+            </Typography>
+          </Button>
+        )}
+      {mostrarBotaoSalvarEFecharCarregando && !smDown && !mdDown && (
         <Skeleton width={180} height={62} />
       )}
       {mostrarBotaoApagar && !mostrarBotaoApagarCarregando && (
@@ -102,11 +123,18 @@ export const FerramentasDeDetalhe = ({
           onClick={aoClicarEmApagar}
           startIcon={<DeleteIcon />}
         >
-          Apagar
+          <Typography
+            variant="button"
+            whiteSpace="nowrap"
+            textOverflow="ellipsis"
+            overflow="hidden"
+          >
+            Apagar
+          </Typography>
         </Button>
       )}
       {mostrarBotaoApagarCarregando && <Skeleton width={100} height={62} />}
-      {mostrarBotaoNovo && !mostrarBotaoNovoCarregando && (
+      {mostrarBotaoNovo && !mostrarBotaoNovoCarregando && !smDown && (
         <Button
           color="primary"
           disableElevation
@@ -114,11 +142,20 @@ export const FerramentasDeDetalhe = ({
           onClick={aoClicarEmNovo}
           startIcon={<AddIcon />}
         >
-          {textoBotaoNovo}
+          <Typography
+            variant="button"
+            whiteSpace="nowrap"
+            textOverflow="ellipsis"
+            overflow="hidden"
+          >
+            {textoBotaoNovo}
+          </Typography>
         </Button>
       )}
 
-      {mostrarBotaoNovoCarregando && <Skeleton width={100} height={62} />}
+      {mostrarBotaoNovoCarregando && !smDown && (
+        <Skeleton width={100} height={62} />
+      )}
 
       {mostrarBotaoVoltar && !mostrarBotaoVoltarCarregando && (
         <>
@@ -130,11 +167,23 @@ export const FerramentasDeDetalhe = ({
             onClick={aoClicarEmVoltar}
             startIcon={<ArrowBackIcon />}
           >
-            Voltar
+            <Typography
+              variant="button"
+              whiteSpace="nowrap"
+              textOverflow="ellipsis"
+              overflow="hidden"
+            >
+              Voltar
+            </Typography>
           </Button>
         </>
       )}
-      {mostrarBotaoVoltarCarregando && <Skeleton width={100} height={62} />}
+      {mostrarBotaoVoltarCarregando && (
+        <>
+          <Divider variant="middle" orientation="vertical" />
+          <Skeleton width={100} height={62} />
+        </>
+      )}
     </Box>
   );
 };
