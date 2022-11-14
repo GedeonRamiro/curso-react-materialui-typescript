@@ -2,13 +2,15 @@
   "pessoas": [
     {
       "id": 1,
-      "nome": "Gedeon",
-      "sobrenome": "Ramiro"
+      "cidadeId": 1,
+      "email": "gedeon@hotmail.com",
+      "nomeCompleto": "Gedeon"
     },
     {
       "id": 2,
-      "nome": "Bastos",
-      "sobrenome": "Costa"
+      "cidadeId": 2,
+      "email": "ramiro@hotmail.com",
+      "nomeCompleto": "Ramiro"
     }
   ]
 }

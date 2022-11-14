@@ -1,10 +1,10 @@
 import { Button } from "@mui/material";
-import { Home } from "@mui/icons-material";
+import { Home, People } from "@mui/icons-material";
 import LocationCityIcon from "@mui/icons-material/LocationCity";
 import { useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useAppThemeContext, useDrawerContext } from "../shared/contexts";
-import { Dashboard, ListagemDeCidade } from "../pages";
+import { Dashboard, ListagemDePessoas } from "../pages";
 
 export const AppRoutes = () => {
   const { toggleTheme } = useAppThemeContext();
@@ -13,6 +13,7 @@ export const AppRoutes = () => {
   useEffect(() => {
     setDrawerOptions([
       { icon: <Home />, path: "/pagina-inicial", label: "Página inicial" },
+      { icon: <People />, path: "/pessoas", label: "Pessoas" },
       { icon: <LocationCityIcon />, path: "/cidades", label: "Cidades" },
     ]);
   }, []);
@@ -20,7 +21,7 @@ export const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/pagina-inicial" element={<Dashboard />} />
-      <Route path="/cidades" element={<ListagemDeCidade />} />
+      <Route path="/pessoas" element={<ListagemDePessoas />} />
       {/*   <Route path="/cidades/detalhes/:id" element={<ListagemDeCidade />} /> */}
       <Route path="*" element={<Navigate to="/pagina-inicial" />} />
     </Routes>
