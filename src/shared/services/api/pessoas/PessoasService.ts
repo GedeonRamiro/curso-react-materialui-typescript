@@ -1,14 +1,14 @@
 import { Environment } from "../../../environments";
 import { Api } from "../axios-config";
 
-interface IListagemPessoa {
+export interface IListagemPessoa {
   id: number;
   email: string;
   cidadeId: number;
   nomeCompleto: string;
 }
 
-interface IDetalhePessoa {
+export interface IDetalhePessoa {
   id: number;
   email: string;
   cidadeId: number;

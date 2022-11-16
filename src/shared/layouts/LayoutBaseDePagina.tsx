@@ -10,7 +10,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { useDrawerContext } from "../contexts";
 
 interface ILayoutBaseDePaginaProps {
-  children: React.ReactNode;
+  children: any;
   titulo: string;
   barraDeFerramentas?: React.ReactNode;
 }
