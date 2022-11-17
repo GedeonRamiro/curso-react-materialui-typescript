@@ -1,8 +1,11 @@
 import {
+  LinearProgress,
   Paper,
   Table,
+  TableBody,
   TableCell,
   TableContainer,
+  TableFooter,
   TableHead,
   TableRow,
 } from "@mui/material";
@@ -10,6 +13,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 import { FerramentasDaListagem } from "../../shared/components";
+import { Environment } from "../../shared/environments";
 import { useDebounce } from "../../shared/hooks";
 import { LayoutBaseDePagina } from "../../shared/layouts";
 import {
@@ -30,8 +34,11 @@ export const ListagemDePessoas = () => {
   }, [searchParams]);
 
   useEffect(() => {
+    setIsLoading(true);
+
     debounce(() => {
       PessoaService.getAll(1, busca).then((result) => {
+        setIsLoading(false);
         if (result instanceof Error) {
           return alert(result.message);
         }
@@ -67,13 +74,29 @@ export const ListagemDePessoas = () => {
             <TableCell>Nome completo</TableCell>
             <TableCell>Email</TableCell>
           </TableHead>
-          {rows.map((row) => (
-            <TableRow key={row.id}>
-              <TableCell>Ação</TableCell>
-              <TableCell>{row.nomeCompleto}</TableCell>
-              <TableCell>{row.email}</TableCell>
-            </TableRow>
-          ))}
+          <TableBody>
+            {rows.map((row) => (
+              <TableRow key={row.id}>
+                <TableCell>Ação</TableCell>
+                <TableCell>{row.nomeCompleto}</TableCell>
+                <TableCell>{row.email}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+
+          {totalCount === 0 && !isLoading && (
+            <caption>{Environment.LISTAGEM_VAZIA}</caption>
+          )}
+
+          <TableFooter>
+            {isLoading && (
+              <TableRow>
+                <TableCell colSpan={3}>
+                  <LinearProgress variant="indeterminate" />
+                </TableCell>
+              </TableRow>
+            )}
+          </TableFooter>
         </Table>
       </TableContainer>
     </LayoutBaseDePagina>
