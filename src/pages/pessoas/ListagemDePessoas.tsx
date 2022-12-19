@@ -1,5 +1,6 @@
 import {
   LinearProgress,
+  Pagination,
   Paper,
   Table,
   TableBody,
@@ -33,11 +34,15 @@ export const ListagemDePessoas = () => {
     return searchParams.get("busca") || "";
   }, [searchParams]);
 
+  const pagina = useMemo(() => {
+    return Number(searchParams.get("pagina") || "1");
+  }, [searchParams]);
+
   useEffect(() => {
     setIsLoading(true);
 
     debounce(() => {
-      PessoaService.getAll(1, busca).then((result) => {
+      PessoaService.getAll(pagina, busca).then((result) => {
         setIsLoading(false);
         if (result instanceof Error) {
           return alert(result.message);
@@ -47,7 +52,7 @@ export const ListagemDePessoas = () => {
         setTotalCount(result.totalCount);
       });
     });
-  }, [busca]);
+  }, [busca, pagina]);
 
   return (
     <LayoutBaseDePagina
@@ -58,7 +63,7 @@ export const ListagemDePessoas = () => {
           mostrarInputBusca
           textoDaBusca={busca}
           aoMudarTextoDeBusca={(texto) =>
-            setSearchParams({ busca: texto }, { replace: true })
+            setSearchParams({ busca: texto, pagina: "1" }, { replace: true })
           }
         />
       }
@@ -93,6 +98,23 @@ export const ListagemDePessoas = () => {
               <TableRow>
                 <TableCell colSpan={3}>
                   <LinearProgress variant="indeterminate" />
+                </TableCell>
+              </TableRow>
+            )}
+
+            {totalCount > 0 && totalCount > Environment.LIMITE_DE_LINHAS && (
+              <TableRow>
+                <TableCell colSpan={3}>
+                  <Pagination
+                    page={pagina}
+                    count={Math.ceil(totalCount / Environment.LIMITE_DE_LINHAS)}
+                    onChange={(_, newPage) =>
+                      setSearchParams(
+                        { busca, pagina: newPage.toString() },
+                        { replace: true }
+                      )
+                    }
+                  />
                 </TableCell>
               </TableRow>
             )}
