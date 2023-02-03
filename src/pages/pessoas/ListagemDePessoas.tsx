@@ -1,4 +1,5 @@
 import {
+  IconButton,
   LinearProgress,
   Pagination,
   Paper,
@@ -10,8 +11,10 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
 import { useEffect, useMemo, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 import { FerramentasDaListagem } from "../../shared/components";
 import { Environment } from "../../shared/environments";
@@ -25,6 +28,7 @@ import {
 export const ListagemDePessoas = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { debounce } = useDebounce();
+  const navigate = useNavigate();
 
   const [rows, setRows] = useState<IListagemPessoa[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -54,6 +58,22 @@ export const ListagemDePessoas = () => {
     });
   }, [busca, pagina]);
 
+  const handleDelete = (id: number) => {
+    if (window.confirm("Realmente deseja apagar?")) {
+      //eslint-disable-line
+      PessoaService.deleteById(id).then((result) => {
+        if (result instanceof Error) {
+          alert(result.message);
+        } else {
+          setRows((oldRows) => {
+            return [...oldRows.filter((oldRow) => oldRow.id !== id)];
+          });
+          alert("Registro apagado com sucesso!");
+        }
+      });
+    }
+  };
+
   return (
     <LayoutBaseDePagina
       titulo="Listagem de pessoas"
@@ -82,7 +102,22 @@ export const ListagemDePessoas = () => {
           <TableBody>
             {rows.map((row) => (
               <TableRow key={row.id}>
-                <TableCell>Ação</TableCell>
+                <TableCell>
+                  <IconButton
+                    aria-label="delete"
+                    size="small"
+                    onClick={() => handleDelete(row.id)}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                  <IconButton
+                    aria-label="edit"
+                    size="small"
+                    onClick={() => navigate(`/cidades/detalhes/${row.id}`)}
+                  >
+                    <EditIcon />
+                  </IconButton>
+                </TableCell>
                 <TableCell>{row.nomeCompleto}</TableCell>
                 <TableCell>{row.email}</TableCell>
               </TableRow>

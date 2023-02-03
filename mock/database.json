@@ -89,12 +89,6 @@
       "cidadeId": 15,
       "email": "mel@hotmail.com",
       "nomeCompleto": "Mel"
-    },
-    {
-      "id": 16,
-      "cidadeId": 16,
-      "email": "pudin@hotmail.com",
-      "nomeCompleto": "Pudin"
     }
   ]
 }
