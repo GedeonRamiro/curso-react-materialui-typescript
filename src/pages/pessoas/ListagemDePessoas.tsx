@@ -85,6 +85,7 @@ export const ListagemDePessoas = () => {
           aoMudarTextoDeBusca={(texto) =>
             setSearchParams({ busca: texto, pagina: "1" }, { replace: true })
           }
+          aoClicarEmNovo={() => navigate("/pessoas/detalhe/nova")}
         />
       }
     >
@@ -113,7 +114,7 @@ export const ListagemDePessoas = () => {
                   <IconButton
                     aria-label="edit"
                     size="small"
-                    onClick={() => navigate(`/cidades/detalhes/${row.id}`)}
+                    onClick={() => navigate(`/pessoas/detalhe/${row.id}`)}
                   >
                     <EditIcon />
                   </IconButton>
