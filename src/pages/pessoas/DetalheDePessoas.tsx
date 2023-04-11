@@ -1,9 +1,10 @@
-import { LinearProgress } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
+import { Form } from "@unform/web";
 import { FerramentasDeDetalhe } from "../../shared/components";
 import { LayoutBaseDePagina } from "../../shared/layouts";
 import { PessoaService } from "../../shared/services/api/pessoas/PessoasService";
+import { VTextField } from "../../shared/forms";
 
 export const DetalheDePessoas = () => {
   const { id = "nova" } = useParams<"id">();
@@ -63,7 +64,10 @@ export const DetalheDePessoas = () => {
         ></FerramentasDeDetalhe>
       }
     >
-      {isLoading && <LinearProgress variant="indeterminate" />}
+      <Form onSubmit={(dados) => console.log(dados)}>
+        <VTextField name="nomeCompleto" />
+        <button type="submit">enviar</button>
+      </Form>
 
       <p>DetalheDePessoa</p>
     </LayoutBaseDePagina>
