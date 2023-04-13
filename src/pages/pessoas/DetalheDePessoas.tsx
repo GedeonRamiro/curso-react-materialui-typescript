@@ -23,7 +23,27 @@ export const DetalheDePessoas = () => {
   const [nome, setNome] = useState("");
 
   const handleSave = (dados: IDetalhePessoa) => {
-    console.log("dados:", dados);
+    setisLoading(true);
+    if (id === "nova") {
+      PessoaService.create(dados).then((result) => {
+        setisLoading(false);
+        if (result instanceof Error) {
+          console.log(result);
+          alert(result.message);
+        } else {
+          navigate(`/pessoas/detalhe/${result}`);
+        }
+      });
+    } else {
+      PessoaService.updateById(Number(id), { id: Number(id), ...dados }).then(
+        (result) => {
+          setisLoading(false);
+          if (result instanceof Error) {
+            alert(result.message);
+          }
+        }
+      );
+    }
   };
 
   const handleDelete = (id: number) => {
@@ -51,6 +71,7 @@ export const DetalheDePessoas = () => {
           navigate("/pessoas");
         } else {
           setNome(result.nomeCompleto);
+          formRef.current?.setData(result);
         }
       });
     }
@@ -74,9 +95,9 @@ export const DetalheDePessoas = () => {
       }
     >
       <Form ref={formRef} onSubmit={handleSave}>
-        <VTextField name="nomeCompleto" />
-        <VTextField name="email" />
-        <VTextField name="cidadeId" />
+        <VTextField placeholder="Nome completo" name="nomeCompleto" />
+        <VTextField placeholder="Email" name="email" />
+        <VTextField placeholder="Cidade id" name="cidadeId" />
       </Form>
 
       <p>DetalheDePessoa</p>
