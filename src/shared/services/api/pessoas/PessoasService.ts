@@ -83,12 +83,9 @@ const create = async (
   }
 };
 
-const updateById = async (
-  id: number,
-  dados: IDetalhePessoa
-): Promise<void | Error> => {
+const updateById = async (dados: IDetalhePessoa): Promise<void | Error> => {
   try {
-    await Api.put(`/pessoas/${id}`, dados);
+    await Api.put(`/pessoas/${Number(dados.id)}`, dados);
   } catch (error) {
     console.error(error);
     return new Error(
