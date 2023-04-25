@@ -2,7 +2,7 @@
   "pessoas": [
     {
       "id": 1,
-      "nomeCompleto": "Teste Máximo sgs",
+      "nomeCompleto": "Teste Máximo",
       "email": "teste@hotmail.com",
       "cidadeId": "1"
     },
