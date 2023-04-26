@@ -1,8 +1,11 @@
 import { BrowserRouter } from "react-router-dom";
-import { AppRoutes } from "./routes";
+
+import "./shared/forms/TranslationsYup";
+
 import { MenuLateral } from "./shared/components";
-import { AppThemeProvider } from "./shared/contexts";
-import { DrawerProvider } from "./shared/contexts";
+import { AppThemeProvider, DrawerProvider } from "./shared/contexts";
+
+import { AppRoutes } from "./routes";
 
 export const App = () => {
   return (

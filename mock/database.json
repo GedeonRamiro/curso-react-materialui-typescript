@@ -4,7 +4,7 @@
       "id": 1,
       "nomeCompleto": "Teste Máximo",
       "email": "teste@hotmail.com",
-      "cidadeId": "1"
+      "cidadeId": 1
     },
     {
       "id": 2,
