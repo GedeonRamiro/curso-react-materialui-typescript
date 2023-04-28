@@ -21,18 +21,20 @@ import { Environment } from "../../shared/environments";
 import { useDebounce } from "../../shared/hooks";
 import { LayoutBaseDePagina } from "../../shared/layouts";
 import {
-  IListagemPessoa,
-  PessoasService,
-} from "../../shared/services/api/pessoas/PessoasService";
+  IListagemCidade,
+  CidadesService,
+} from "../../shared/services/api/cidades/CidadesService";
 
-export const ListagemDePessoas = () => {
+export const ListagemDeCidades = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { debounce } = useDebounce();
   const navigate = useNavigate();
 
-  const [rows, setRows] = useState<IListagemPessoa[]>([]);
+  const [rows, setRows] = useState<IListagemCidade[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [totalCount, setTotalCount] = useState(0);
+
+  console.log("ROWS:", rows);
 
   const busca = useMemo(() => {
     return searchParams.get("busca") || "";
@@ -46,7 +48,7 @@ export const ListagemDePessoas = () => {
     setIsLoading(true);
 
     debounce(() => {
-      PessoasService.getAll(pagina, busca).then((result) => {
+      CidadesService.getAll(pagina, busca).then((result) => {
         setIsLoading(false);
         if (result instanceof Error) {
           return alert(result.message);
@@ -61,13 +63,13 @@ export const ListagemDePessoas = () => {
   const handleDelete = (id: number) => {
     if (window.confirm("Realmente deseja apagar?")) {
       //eslint-disable-line
-      PessoasService.deleteById(id).then((result) => {
+      CidadesService.deleteById(id).then((result) => {
         if (result instanceof Error) {
           alert(result.message);
         } else {
-          setRows((oldRows) => {
-            return [...oldRows.filter((oldRow) => oldRow.id !== id)];
-          });
+          setRows((oldRows) => [
+            //...oldRows.filter((oldRow) => oldRow.id !== id),
+          ]);
           alert("Registro apagado com sucesso!");
         }
       });
@@ -76,7 +78,7 @@ export const ListagemDePessoas = () => {
 
   return (
     <LayoutBaseDePagina
-      titulo="Listagem de pessoas"
+      titulo="Listagem de cidades"
       barraDeFerramentas={
         <FerramentasDaListagem
           textoBotaoNovo="Nova"
@@ -85,7 +87,7 @@ export const ListagemDePessoas = () => {
           aoMudarTextoDeBusca={(texto) =>
             setSearchParams({ busca: texto, pagina: "1" }, { replace: true })
           }
-          aoClicarEmNovo={() => navigate("/pessoas/detalhe/nova")}
+          aoClicarEmNovo={() => navigate("/cidades/detalhe/nova")}
         />
       }
     >
@@ -97,8 +99,7 @@ export const ListagemDePessoas = () => {
         <Table>
           <TableHead>
             <TableCell>Ação</TableCell>
-            <TableCell>Nome completo</TableCell>
-            <TableCell>Email</TableCell>
+            <TableCell>Nome</TableCell>
           </TableHead>
           <TableBody>
             {rows.map((row) => (
@@ -114,13 +115,12 @@ export const ListagemDePessoas = () => {
                   <IconButton
                     aria-label="edit"
                     size="small"
-                    onClick={() => navigate(`/pessoas/detalhe/${row.id}`)}
+                    onClick={() => navigate(`/cidades/detalhe/${row.id}`)}
                   >
                     <EditIcon />
                   </IconButton>
                 </TableCell>
-                <TableCell>{row.nomeCompleto}</TableCell>
-                <TableCell>{row.email}</TableCell>
+                <TableCell>{row.nome}</TableCell>
               </TableRow>
             ))}
           </TableBody>

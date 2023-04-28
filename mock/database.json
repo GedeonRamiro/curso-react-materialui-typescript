@@ -1,4 +1,10 @@
 {
+  "cidades": [
+    {
+      "id": 1,
+      "nome": "Timon-MA"
+    }
+  ],
   "pessoas": [
     {
       "id": 1,
