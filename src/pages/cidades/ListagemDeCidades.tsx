@@ -34,8 +34,6 @@ export const ListagemDeCidades = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [totalCount, setTotalCount] = useState(0);
 
-  console.log("ROWS:", rows);
-
   const busca = useMemo(() => {
     return searchParams.get("busca") || "";
   }, [searchParams]);

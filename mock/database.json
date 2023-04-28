@@ -3,6 +3,14 @@
     {
       "id": 1,
       "nome": "Timon-MA"
+    },
+    {
+      "nome": "Codó",
+      "id": 2
+    },
+    {
+      "id": 3,
+      "nome": "São João dos Patos-PI"
     }
   ],
   "pessoas": [
