@@ -1,4 +1,5 @@
 import { Autocomplete, CircularProgress, TextField } from "@mui/material";
+import { useField } from "@unform/core";
 import { useEffect, useMemo, useState } from "react";
 import { useDebounce } from "../../../shared/hooks";
 import { CidadesService } from "../../../shared/services/api/cidades/CidadesService";
@@ -15,11 +16,23 @@ interface IAutoCompleteCidadeProps {
 export const AutoCompletoCidade = ({
   isExternalLoading = false,
 }: IAutoCompleteCidadeProps) => {
+  const { fieldName, registerField, error, clearError, defaultValue } =
+    useField("cidadeId");
+
   const [opcoes, setOpcoes] = useState<TAutoComleteOption[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [busca, setBusca] = useState("");
-  const [selectedId, setSelectedId] = useState<number | undefined>(undefined);
+  const [selectedId, setSelectedId] =
+    useState<number | undefined>(defaultValue);
   const { debounce } = useDebounce();
+
+  useEffect(() => {
+    registerField({
+      name: fieldName,
+      getValue: () => selectedId,
+      setValue: (_, newSelectedId) => setSelectedId(newSelectedId),
+    });
+  }, [fieldName, registerField, selectedId]);
 
   useEffect(() => {
     setIsLoading(true);
@@ -39,9 +52,10 @@ export const AutoCompletoCidade = ({
   }, [busca]);
 
   const autoCompleteSelectedOption = useMemo(() => {
-    if (!selectedId) return undefined;
+    if (!selectedId) return null;
 
     const selectedOption = opcoes.find((opcao) => opcao.id === selectedId);
+    if (!selectedOption) return null;
 
     return selectedOption;
   }, [selectedId, opcoes]);
@@ -49,7 +63,7 @@ export const AutoCompletoCidade = ({
   return (
     <Autocomplete
       openText="Abrir"
-      closeText="Fechar"
+      clearText="Fechar"
       noOptionsText="Sem opções"
       loadingText="Carregando..."
       disablePortal
@@ -65,9 +79,17 @@ export const AutoCompletoCidade = ({
       onChange={(_, newValue) => {
         setSelectedId(newValue?.id);
         setBusca("");
+        clearError();
       }}
       onInputChange={(_, newValue) => setBusca(newValue)}
-      renderInput={(params) => <TextField {...params} label="Cidade" />}
+      renderInput={(params) => (
+        <TextField
+          {...params}
+          label="Cidade"
+          error={!!error}
+          helperText={error}
+        />
+      )}
     />
   );
 };

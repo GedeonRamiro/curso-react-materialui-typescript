@@ -104,7 +104,7 @@ export const DetalheDePessoas = () => {
     } else {
       formRef.current?.setData({
         email: "",
-        cidadeId: "",
+        cidadeId: undefined,
         nomeCompleto: "",
       });
     }
